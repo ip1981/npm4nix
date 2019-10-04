@@ -14,9 +14,10 @@ Requirements
 
 Npm4nix is written in JavaScript with minimum number of depednecies
 and should be executed by [Node.js](https://nodejs.org).
-Npm4nix invokes [curl](https://curl.haxx.se/), Git, and
-[nix-hash](https://nixos.org/nix/manual/#sec-nix-hash), so these tools
-should be installed.
+Npm4nix invokes [curl](https://curl.haxx.se/),
+Git, [GNU Tar](https://www.gnu.org/software/tar/), and
+[nix-hash](https://nixos.org/nix/manual/#sec-nix-hash), so these tools should
+be installed.
 
 
 Example
