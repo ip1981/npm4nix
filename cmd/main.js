@@ -97,7 +97,7 @@ function processArchive(url) {
     try {
         exec(`curl -LsSf -o '${file}' '${url}'`);
         sha256 = getSHA256(file);
-        pkg = JSON.parse(exec(`tar -xOf '${file}' --wildcards '*/package.json'`));
+        pkg = JSON.parse(exec(`tar -xOf '${file}' --wildcards --no-wildcards-match-slash '*/package.json'`));
     } finally {
         rmTree(dir);
     }
