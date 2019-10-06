@@ -82,15 +82,18 @@ function isLocal(p) {
     return fs.existsSync(p);
 }
 
-function processLocal(p) {
-    console.log(render(p, readPackage(p)));
+function localSrc(p) {
+    return {
+        pkg: readPackage(p),
+        src: p
+    };
 }
 
 function isArchive(url) {
     return url.match(new RegExp('(https?://)?.+/[^/]+\.t(ar\.)?(gz|bz2|xz)', 'i'));
 }
 
-function processArchive(url) {
+function fetchurl(url) {
     const dir = mkdtemp();
     const file = path.join(dir, path.basename(url));
     var sha256, pkg;
@@ -101,11 +104,14 @@ function processArchive(url) {
     } finally {
         rmTree(dir);
     }
-    console.log(render({
-        fetch: 'fetchurl',
-        url: url,
-        sha256: sha256
-    }, pkg));
+    return {
+        pkg: pkg,
+        src: {
+            fetch: 'fetchurl',
+            url: url,
+            sha256: sha256
+        }
+    };
 }
 
 function isGit(url) {
@@ -114,7 +120,7 @@ function isGit(url) {
         url.match(new RegExp('^git(\\+https)?://.+', 'i'));
 }
 
-function processGit(url) {
+function fetchgit(url) {
     const dir = mkdtemp();
     var rev, sha256, pkg;
     try {
@@ -129,12 +135,14 @@ function processGit(url) {
     } finally {
         rmTree(dir);
     }
-    console.log(render({
-        fetch: 'fetchgit',
-        url: url,
-        rev: rev,
-        sha256: sha256
-    }, pkg));
+    return {
+        pkg: pkg,
+        src: {
+            fetch: 'fetchgit',
+            rev: rev,
+            sha256: sha256
+        }
+    };
 }
 
 
@@ -162,11 +170,11 @@ if (url === null) {
 }
 
 if (isLocal(url)) {
-    processLocal(url);
+    console.log(render(localSrc(url)));
 } else if (isGit(url)) {
-    processGit(url);
+    console.log(render(fetchgit(url)));
 } else if (isArchive(url)) {
-    processArchive(url);
+    console.log(render(fetchurl(url)));
 } else {
     log(`unsupported URL: '${url}'`);
     process.exit(1);
