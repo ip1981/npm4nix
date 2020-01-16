@@ -6,13 +6,13 @@ for the [Npm.nix](https://github.com/ip1981/npm.nix) project. Npm4nix is
 inspired by [Cabal2nix](https://github.com/NixOS/cabal2nix). Unfortunately,
 [npm2nix](https://github.com/NixOS/npm2nix) is already taken :) Thus,
 `npm4nix`.  It supports local directories and tarballs (e. g. `*.tgz`),
-remote tarballs, remote [Git](https://git-scm.com/) respositories.
+remote tarballs, remote [Git](https://git-scm.com/) repositories.
 
 
 Requirements
 ============
 
-Npm4nix is written in JavaScript with minimum number of depednecies
+Npm4nix is written in JavaScript with minimum number of dependencies
 and should be executed by [Node.js](https://nodejs.org).
 Npm4nix invokes [curl](https://curl.haxx.se/),
 Git, [GNU Tar](https://www.gnu.org/software/tar/), and
